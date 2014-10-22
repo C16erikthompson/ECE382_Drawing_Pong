@@ -198,6 +198,7 @@ clearDisplay:
 	call	#setAddress
 
 	mov.w	#0x01, R12			; write a "clear" set of pixels
+
 	mov.w	#0x00, R13			; to every byt on the display
 
 	mov.w	#0x360, R11			; loop counter
@@ -356,13 +357,27 @@ drawBlock:
 	rla.w	R13					; pixel address.
 	call	#setAddress			; move cursor to upper left corner of block
 
+;--------------------------------------------------------------------------------
+; Draws the Ball
+;--------------------------------------------------------------------------------
 	mov		#1, R12
+	mov		#0x18, R13
+	call	#writeNokiaByte
+	mov		#0x3C, R13
+	call	#writeNokiaByte
+	mov		#0x7E, R13
+	call	#writeNokiaByte
 	mov		#0xFF, R13
-	mov.w	#0x08, R5			; loop all 8 pixel columns
-loopdB:
-	call	#writeNokiaByte		; draw the pixels
-	dec.w	R5
-	jnz		loopdB
+	call	#writeNokiaByte
+	mov		#0xFF, R13
+	call	#writeNokiaByte
+	mov		#0x7E, R13
+	call	#writeNokiaByte
+	mov		#0x3C, R13
+	call	#writeNokiaByte
+	mov		#0x18, R13
+	call	#writeNokiaByte
+;---------------------------------------------------------------------------------
 
 	pop		R7
 	pop		R13
@@ -371,6 +386,9 @@ loopdB:
 
 	ret							; return whence you came
 
+;----------------------------------------------------------------------------------
+;	moveDelay - Delays operation for some period of time
+;----------------------------------------------------------------------------------
 moveDelay:
 	mov		#04FFh, R14
 delayLoop:
@@ -382,9 +400,14 @@ delayLoop:
 	jnz		delayLoop
 
 	ret
-
+;-------------------------------------------------------------------------------
+;	Name:		drawPaddle
+;	Inputs:		R12 row to draw block
+;				R13	column to draw block
+;	Outputs:	none
+;	Purpose:	draw an 8 pixel black column at screeen cordinates	 .
+;-------------------------------------------------------------------------------
 drawPaddle:
-	push	R5
 	push	R12
 	push	R13
 	push	R7
@@ -403,6 +426,5 @@ drawPaddle:
 	pop		R7
 	pop		R13
 	pop		R12
-	pop		R5
 
 	ret							; return whence you came
