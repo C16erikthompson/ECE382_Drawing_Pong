@@ -6,7 +6,7 @@ Etch-a-sketch and Pong Programs
 #Required Functionality
   Required functionality consisted of creating an etch-a-sketch program in C displayed on the lcd attatchment for the MSP430.  To do this, a C program was created that utilized an assembly program similar to that created in Lab3.  As the assembly program already moved the block o the LCD by utiliing the buttons on the attatchment, the only changes that had to be made to the program consisted of taking out the #cleardisplay command that occured with each button press and passing a variable value (stored in a register dictated b the C program) to the register used for drawing the block as opposed to the previous 0xFF passed in.  Code for button press and variable that controlled color:
   
-  ~~~
+
    else if (AUX_BUTTON == 0) {
 				//while(AUX_BUTTON == 0);
 				i++;
@@ -17,7 +17,7 @@ Etch-a-sketch and Pong Programs
 					color = 0x00;
 				}
 				button_press = TRUE;
-	~~~
+
   
 #B Functionality
   B funtionality consisted of having the block bounce around the screen, using the edges of the screen as boundaries, without iput from the user.  To achieve this, button inputs were removed and replaced with if statements to dictate the direction and movement of the ball and handle collision detection.
